@@ -46,13 +46,12 @@ namespace EmailApplication.WebUi.Controllers
 
                 await _emailService.SendEmailAsync(emailRequest);
 
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
                 throw;
             }
-            
         }
     }
 }
