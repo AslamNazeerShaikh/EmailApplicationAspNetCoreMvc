@@ -35,6 +35,23 @@ namespace EmailApplication.Services.Classes
             {
                 HtmlBody = emailRequest.Body
             };
+
+            byte[] fileBytes;
+            string fileName = "Dummy.pdf";
+            string filePath = Path.Combine(Environment.CurrentDirectory, @"Attachments\", fileName);
+
+            if (File.Exists(filePath))
+            {
+                FileStream file = new FileStream(filePath,
+                    FileMode.Open, FileAccess.Read);
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    fileBytes = ms.ToArray();
+                }
+                emailBodyBuilder.Attachments.Add("Attachment.pdf", fileBytes, ContentType.Parse("application/octet-stream"));
+            }
+
             email.Body = emailBodyBuilder.ToMessageBody();
 
             using var smtp = new SmtpClient();

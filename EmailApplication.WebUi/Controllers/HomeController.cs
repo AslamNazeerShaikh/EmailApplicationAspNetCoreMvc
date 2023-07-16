@@ -41,7 +41,7 @@ namespace EmailApplication.WebUi.Controllers
                 {
                     ToEmail = "beingaslam@outlook.in",
                     Subject = "Welcome Aslam Shaikh !",
-                    Body = "Thanks for reading this email"
+                    Body = GetHtmlContent()
                 };
 
                 await _emailService.SendEmailAsync(emailRequest);
@@ -52,6 +52,12 @@ namespace EmailApplication.WebUi.Controllers
             {
                 throw;
             }
+        }
+
+        private string GetHtmlContent()
+        {
+            string response = "<h1>Thanks for reading this email.</h1>";
+            return response;
         }
     }
 }
