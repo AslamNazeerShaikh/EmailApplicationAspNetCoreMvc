@@ -28,7 +28,10 @@ namespace EmailApplication.Services.Classes
             {
                 Sender = MailboxAddress.Parse(_emailSettings.Email)
             };
+
             email.To.Add(MailboxAddress.Parse(emailRequest.ToEmail));
+            // email.Cc.Add(MailboxAddress.Parse(emailRequest.ToEmail));
+            // email.Bcc.Add(MailboxAddress.Parse(emailRequest.ToEmail));
             email.Subject = emailRequest.Subject;
 
             var emailBodyBuilder = new BodyBuilder
@@ -42,13 +45,14 @@ namespace EmailApplication.Services.Classes
 
             if (File.Exists(filePath))
             {
-                FileStream file = new FileStream(filePath,
-                    FileMode.Open, FileAccess.Read);
+                FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
                 using (var ms = new MemoryStream())
                 {
                     file.CopyTo(ms);
                     fileBytes = ms.ToArray();
                 }
+
                 emailBodyBuilder.Attachments.Add("Attachment.pdf", fileBytes, ContentType.Parse("application/octet-stream"));
             }
 
